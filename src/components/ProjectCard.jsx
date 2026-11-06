@@ -1,5 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import MiniStateMachine from './diagrams/MiniStateMachine';
+import MiniThreeTier from './diagrams/MiniThreeTier';
+import MiniDocStore from './diagrams/MiniDocStore';
 
 export default function ProjectCard({ project, onSelect }) {
   const shouldReduceMotion = useReducedMotion();
@@ -17,7 +20,7 @@ export default function ProjectCard({ project, onSelect }) {
   return (
     <CardWrapper
       {...motionProps}
-      className="flex flex-col justify-between rounded-xl border border-surface-border bg-surface-card p-6 transition-colors hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
+      className="group flex flex-col justify-between rounded-xl border border-surface-border bg-surface-card p-6 transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
     >
       <div className="space-y-4">
         {/* Header: Title & Badges */}
@@ -34,7 +37,7 @@ export default function ProjectCard({ project, onSelect }) {
               </span>
             )}
           </div>
-          <h3 className="text-xl font-bold tracking-tight text-text-primary">
+          <h3 className="text-xl font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors">
             {project.title}
           </h3>
         </div>
@@ -43,6 +46,13 @@ export default function ProjectCard({ project, onSelect }) {
         <p className="text-sm leading-relaxed text-text-secondary">
           {project.shortDescription}
         </p>
+
+        {/* Mini Architecture Visual */}
+        <div className="pt-1">
+          {project.visualType === 'state-machine' && <MiniStateMachine />}
+          {project.visualType === 'three-tier' && <MiniThreeTier />}
+          {!project.visualType && <MiniDocStore />}
+        </div>
 
         {/* Tech Stack Chips */}
         <div className="flex flex-wrap gap-1.5 pt-1">
@@ -65,7 +75,7 @@ export default function ProjectCard({ project, onSelect }) {
           className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-accent hover:text-accent-hover transition-colors"
         >
           <span>View Details & Architecture</span>
-          <ArrowRight className="h-3.5 w-3.5" />
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </button>
 
         <div className="flex items-center gap-3">
