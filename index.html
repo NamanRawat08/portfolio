@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Naman Rawat | Software Engineer (Backend-focused)</title>
+    <meta name="title" content="Naman Rawat | Software Engineer (Backend-focused)" />
+    <meta name="description" content="Systems-minded backend engineer who designs services around correctness under concurrency, real-time event delivery, and reproducible data layers (Node.js, PostgreSQL, Prisma, Socket.IO)." />
+    <meta name="keywords" content="Naman Rawat, Backend Engineer, Software Engineer, Node.js, PostgreSQL, Prisma, Socket.IO, Chitkara University, Distributed Systems" />
+    <meta name="author" content="Naman Rawat" />
+    <meta name="theme-color" content="#070c18" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://namanrawat.dev/" />
+    <meta property="og:title" content="Naman Rawat | Software Engineer (Backend-focused)" />
+    <meta property="og:description" content="I build backend systems that stay correct under load. Systems-minded software engineer specializing in concurrency, state machines, and relational migrations." />
+    <meta property="og:image" content="/favicon.svg" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://namanrawat.dev/" />
+    <meta property="twitter:title" content="Naman Rawat | Software Engineer (Backend-focused)" />
+    <meta property="twitter:description" content="I build backend systems that stay correct under load. Systems-minded software engineer specializing in concurrency, state machines, and relational migrations." />
+    <meta property="twitter:image" content="/favicon.svg" />
+
+    <!-- Structured Data (JSON-LD) for Search Engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Naman Rawat",
+        "jobTitle": "Software Engineer (Backend-focused)",
+        "description": "Systems-minded software engineer who designs backend services around correctness under concurrency, real-time event delivery, and reproducible data layers.",
+        "email": "namanraw619@gmail.com",
+        "telephone": "+91-9999596885",
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Chitkara University"
+        },
+        "sameAs": [
+          "https://github.com/NamanRawat08",
+          "https://linkedin.com/in/naman-rawat"
+        ],
+        "knowsAbout": [
+          "Backend Engineering",
+          "Node.js",
+          "Express.js",
+          "PostgreSQL",
+          "Prisma ORM",
+          "Socket.IO",
+          "Data Structures and Algorithms",
+          "Concurrency",
+          "Finite State Machines"
+        ]
+      }
+    </script>
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Script to prevent theme flashing -->
+    <script>
+      (function() {
+        try {
+          const storedTheme = localStorage.getItem('theme');
+          if (storedTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-bg-primary text-text-primary min-h-screen antialiased selection:bg-accent/20 selection:text-accent font-sans">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
