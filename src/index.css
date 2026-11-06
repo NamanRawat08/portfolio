@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme default tokens */
+  --color-bg-primary: #f8fafc;
+  --color-bg-secondary: #f1f5f9;
+  --color-bg-tertiary: #e2e8f0;
+  --color-surface-card: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-surface-border: #e2e8f0;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-accent: #0284c7;
+  --color-accent-hover: #0369a1;
+  --color-accent-muted: rgba(2, 132, 199, 0.12);
+  --color-accent-subtle: rgba(2, 132, 199, 0.05);
+}
+
+html.dark {
+  /* Dark theme tokens (deep navy/near-black) */
+  --color-bg-primary: #070c18;
+  --color-bg-secondary: #0c1427;
+  --color-bg-tertiary: #131f38;
+  --color-surface-card: #0d172c;
+  --color-surface-hover: #132242;
+  --color-surface-border: #1a2c4e;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-accent: #38bdf8;
+  --color-accent-hover: #7dd3fc;
+  --color-accent-muted: rgba(56, 189, 248, 0.15);
+  --color-accent-subtle: rgba(56, 189, 248, 0.06);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Custom focus outline for accessible keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
