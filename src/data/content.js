@@ -14,7 +14,8 @@ export const personalData = {
     github: "https://github.com/NamanRawat08",
     linkedin: "https://linkedin.com/in/naman-rawat",
     leetcode: "TODO", // TODO: Add LeetCode profile URL
-    resumeUrl: "/Naman_Rawat_Resume.pdf", // Placeholder in /public
+    resumeUrl: "/Naman_Rawat_Resume.pdf",
+    avatar: "/naman-rawat.jpg",
   },
 
   sections: {
