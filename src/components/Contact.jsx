@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, Phone, Github, Linkedin, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { personalData } from '../data/content';
+import FadeIn from './common/FadeIn';
 
 export default function Contact() {
   const { identity, sections } = personalData;
@@ -129,7 +130,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-12 md:py-16">
-      <div className="space-y-8">
+      <FadeIn className="space-y-8">
         {/* Section Header */}
         <div className="space-y-1">
           <h2 className="text-xs font-mono font-semibold uppercase tracking-wider text-accent">
@@ -376,7 +377,7 @@ export default function Contact() {
             </div>
           </div>
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }
