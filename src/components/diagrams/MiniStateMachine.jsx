@@ -7,8 +7,8 @@ export default function MiniStateMachine() {
   ];
 
   return (
-    <div className="rounded-lg border border-surface-border bg-bg-secondary/60 p-3 transition-colors group-hover:border-accent/40">
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-surface-border/50">
+    <div className="h-[100px] flex flex-col justify-between rounded-lg border border-surface-border bg-bg-secondary/60 p-3 transition-colors group-hover:border-accent/40">
+      <div className="flex items-center justify-between border-b border-surface-border/50 pb-1.5">
         <span className="font-mono text-[10px] text-accent font-semibold tracking-wider uppercase flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
           FSM Order Lifecycle
@@ -19,7 +19,7 @@ export default function MiniStateMachine() {
       </div>
 
       {/* SVG / CSS State Machine Flow */}
-      <div className="flex items-center justify-between gap-1 pt-1">
+      <div className="flex items-center justify-between gap-1">
         {steps.map((step, idx) => (
           <div key={step.id} className="flex items-center flex-1 last:flex-none">
             <div className="flex flex-col items-center">

@@ -20,12 +20,12 @@ export default function ProjectCard({ project, onSelect }) {
   return (
     <CardWrapper
       {...motionProps}
-      className="group flex flex-col justify-between rounded-xl border border-surface-border bg-surface-card p-6 transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
+      className="group flex flex-col justify-between rounded-xl border border-surface-border bg-surface-card p-6 transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 h-full"
     >
-      <div className="space-y-4">
-        {/* Header: Title & Badges */}
-        <div>
-          <div className="flex flex-wrap items-center gap-2 mb-2">
+      <div className="flex flex-col flex-1">
+        {/* Header: Title & Badges (consistent height) */}
+        <div className="mb-3">
+          <div className="h-6 flex items-center mb-2">
             {project.featured && (
               <span className="rounded-full border border-accent/40 bg-accent-muted px-2 py-0.5 font-mono text-[11px] font-semibold text-accent">
                 Flagship Project
@@ -37,29 +37,29 @@ export default function ProjectCard({ project, onSelect }) {
               </span>
             )}
           </div>
-          <h3 className="text-xl font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors">
+          <h3 className="text-xl font-bold tracking-tight text-text-primary group-hover:text-accent transition-colors min-h-[56px] flex items-start">
             {project.title}
           </h3>
         </div>
 
-        {/* Short Description */}
-        <p className="text-sm leading-relaxed text-text-secondary">
+        {/* Short Description (consistent height) */}
+        <p className="text-sm leading-relaxed text-text-secondary min-h-[80px] mb-4">
           {project.shortDescription}
         </p>
 
-        {/* Mini Architecture Visual */}
-        <div className="pt-1">
+        {/* Mini Architecture Visual (exact 100px height across all cards) */}
+        <div className="mb-4">
           {project.visualType === 'state-machine' && <MiniStateMachine />}
           {project.visualType === 'three-tier' && <MiniThreeTier />}
           {!project.visualType && <MiniDocStore />}
         </div>
 
-        {/* Tech Stack Chips */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
+        {/* Tech Stack Chips (aligned vertically across all cards) */}
+        <div className="mt-auto pt-2 min-h-[64px] flex flex-wrap content-start gap-1.5">
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded bg-bg-secondary px-2 py-0.5 font-mono text-xs text-text-secondary"
+              className="inline-flex items-center rounded-md border border-surface-border bg-bg-secondary/90 px-2.5 py-1 font-mono text-xs text-text-secondary hover:text-accent hover:border-accent/40 transition-colors shadow-sm"
             >
               {tech}
             </span>
@@ -67,7 +67,7 @@ export default function ProjectCard({ project, onSelect }) {
         </div>
       </div>
 
-      {/* Footer Actions */}
+      {/* Footer Actions (aligned at the bottom across all cards) */}
       <div className="mt-6 pt-4 border-t border-surface-border/60 flex items-center justify-between">
         <button
           type="button"
