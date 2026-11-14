@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { X, Github, ExternalLink, CheckCircle } from 'lucide-react';
-import OrderStateMachineDiagram from './diagrams/OrderStateMachineDiagram';
+import RateLimiterDiagram from './diagrams/RateLimiterDiagram';
 import ThreeTierArchitectureDiagram from './diagrams/ThreeTierArchitectureDiagram';
 import { hasLink } from '../utils/links';
 
@@ -144,12 +144,12 @@ export default function ProjectModal({ project, onClose }) {
           </div>
 
           {/* Architectural Visual / Diagram */}
-          {project.visualType === 'state-machine' && (
+          {project.visualType === 'rate-limiter' && (
             <div className="space-y-2">
               <h4 className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-                System State Model & Event Pipeline
+                Atomic Rate Limiting & Algorithm Trade-offs
               </h4>
-              <OrderStateMachineDiagram />
+              <RateLimiterDiagram />
             </div>
           )}
 

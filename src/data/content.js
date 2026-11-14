@@ -29,7 +29,7 @@ export const personalData = {
     },
     projects: {
       title: "Featured Projects",
-      subtitle: "Production architectures, state machines, and concurrency solutions",
+      subtitle: "Distributed rate limiting, trading systems, and concurrency in practice",
     },
     principles: {
       title: "How I Build",
@@ -48,7 +48,7 @@ export const personalData = {
 
   summary: {
     paragraph:
-      "Systems-minded software engineer who designs backend services around correctness under concurrency, real-time event delivery, and reproducible data layers. Builds on Node.js, PostgreSQL, Prisma, and Socket.IO, modelling workflows as state machines, enforcing consistency with atomic transactions, and versioning schemas through migrations. Grounded in DSA (250+ problems in Java), OS, DBMS, and Computer Networks.",
+      "Systems-minded software engineer who designs backend services around correctness under concurrency and reproducible data layers. Builds on Node.js, Express, PostgreSQL, and Redis, making shared-state checks atomic with Redis Lua scripts and database transactions, versioning schemas through migrations, and benchmarking trade-offs instead of assuming them. Grounded in DSA (250+ problems in Java), OS, DBMS, and Computer Networks.",
   },
 
   quickFacts: [
@@ -71,12 +71,14 @@ export const personalData = {
         "RESTful service design",
         "Socket.IO (WebSocket event streaming)",
         "Prisma ORM",
+        "Redis Lua scripting",
       ],
     },
     {
       category: "Data & Persistence",
       skills: [
         "PostgreSQL",
+        "Redis",
         "MySQL",
         "MongoDB",
         "Relational schema design",
@@ -88,6 +90,7 @@ export const personalData = {
       category: "Systems Concepts",
       skills: [
         "Concurrency & race conditions",
+        "Rate limiting (token bucket, sliding window)",
         "State machines",
         "Data consistency",
         "Process scheduling",
@@ -109,6 +112,7 @@ export const personalData = {
         "Code review",
         "Debugging",
         "Testing",
+        "Benchmarking",
         "Technical documentation",
         "GitHub Copilot",
         "Cursor",
@@ -121,22 +125,23 @@ export const personalData = {
 
   projects: [
     {
-      id: "noush",
-      title: "Noush: Event-Driven E-Commerce Backend",
+      id: "redis-ratelimit-lab",
+      title: "redis-ratelimit-lab: Distributed Rate Limiter",
       shortDescription:
-        "Event-driven e-commerce backend enforcing order state transitions via finite state machines and preventing overselling with atomic Prisma transactions.",
-      stack: ["Node.js", "Express.js", "PostgreSQL", "Prisma", "Socket.IO", "React"],
+        "Distributed rate limiter for Express using atomic Redis Lua scripts, benchmarking token bucket vs sliding window under bursts, races, and multi-instance load.",
+      stack: ["Node.js", "Express.js", "Redis", "Lua", "autocannon"],
       featured: true,
-      visualType: "state-machine",
+      visualType: "rate-limiter",
       bullets: [
-        "Modelled the order lifecycle as a server-enforced finite state machine (pending → confirmed → shipped → delivered), rejecting invalid transitions and streaming each state change to clients over Socket.IO.",
-        "Solved the concurrent-checkout race condition by executing stock decrement and order creation inside a single atomic Prisma transaction, so both commit or both roll back, with no overselling.",
-        "Translated the founder's operational workflows into success metrics and system requirements for a merchandising and restock-analytics module.",
-        "Leading the re-architecture from a single-vendor MVP to a multi-vendor marketplace, defining the tenant data model and service boundaries before writing code.",
+        "Built token bucket and sliding window limiters as Lua scripts that run inside Redis, so each read → check → write executes atomically even with many app servers sharing one Redis.",
+        "Reproduced and fixed the race condition: 100 simultaneous requests across 5 connections against a limit of 10 got 100 through a naive GET/SET limiter and exactly 10 through the Lua limiter.",
+        "Proved why the state must be shared: across 3 server instances, in-memory limiters let 30 requests through a limit of 10, while the Redis backend held the limit at 10.",
+        "Benchmarked the trade-offs: both algorithms cost ~0.3 ms per check and ~7% HTTP throughput, but at a limit of 1,000 the sliding window log needs 108 KB per client versus 94 B for the token bucket, which in turn can allow up to 19 requests in a 10 s span.",
+        "Hardened the middleware with Redis server time (clock-skew safe), TTLs on every key, RateLimit and Retry-After headers on 429s, and configurable fail-open or fail-closed behaviour when Redis is unreachable.",
       ],
       links: {
-        github: "TODO", // TODO: Add Noush GitHub repository link
-        live: "TODO", // TODO: Add Noush live demo URL
+        github: "https://github.com/NamanRawat08/redis-ratelimit-lab",
+        live: null,
       },
     },
     {
@@ -154,25 +159,26 @@ export const personalData = {
         "Shipping through feature branches and squash-merged PRs, with AI-generated code (Google Antigravity, Claude) passed through a mandatory human-review gate.",
       ],
       links: {
-        github: "TODO", // TODO: Add Nexfolio GitHub repository link
+        github: "https://github.com/NamanRawat08/Nexfolio",
         live: "TODO", // TODO: Add Nexfolio live demo URL
       },
     },
     {
-      id: "resume-builder",
-      title: "Resume Builder",
-      teamNote: "Team project (2 developers)",
+      id: "portfolio",
+      title: "Portfolio Website",
       shortDescription:
-        "Collaborative resume management service providing CRUD REST endpoints backed by MongoDB document storage with locked-down API contracts.",
-      stack: ["React", "Node.js", "MongoDB"],
+        "This site: a data-driven React SPA where every word lives in one content file, built for accessibility, reduced motion, and zero-config static deployment.",
+      stack: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       featured: false,
-      visualType: null,
+      visualType: "static-site",
       bullets: [
-        "Built a resume management service exposing CRUD REST endpoints over a MongoDB document store, with a React client.",
-        "Split frontend and backend ownership with a teammate and used PR reviews to lock down API contracts and catch integration defects early.",
+        "Kept all copy, projects, and links in a single content module that the components render, so updating the site never means editing layout code.",
+        "Built an accessible project dialog with a focus trap, Escape to close, and focus restored to the trigger, plus a skip link and scroll animations that respect reduced-motion settings.",
+        "Implemented light and dark themes with CSS variables and a pre-paint script, so a returning visitor's saved theme loads without a flash.",
+        "Added a validated contact form that posts to Formspree when configured and otherwise falls back to a pre-filled email draft.",
       ],
       links: {
-        github: "TODO", // TODO: Add Resume Builder GitHub repository link
+        github: "https://github.com/NamanRawat08/portfolio",
         live: null,
       },
     },
@@ -182,18 +188,18 @@ export const personalData = {
     {
       id: "concurrency",
       title: "Correctness under Concurrency",
-      subtitle: "Atomic Transactions",
+      subtitle: "Atomic Shared State",
       description:
-        "Eliminating race conditions at the database boundary by executing dependent operations—such as inventory decrements and order generation—inside atomic ACID transactions that commit or roll back as an indivisible unit.",
-      appliedIn: "Noush",
+        "Closing race conditions where state is shared: running read → check → write as a single atomic Lua script inside Redis, so concurrent app servers can never act on the same stale count.",
+      appliedIn: "redis-ratelimit-lab",
     },
     {
-      id: "state-machines",
-      title: "State Machines for Workflows",
-      subtitle: "Server-Enforced Transitions",
+      id: "measure",
+      title: "Measure the Trade-offs",
+      subtitle: "Benchmarks over Assumptions",
       description:
-        "Modelling business lifecycles as strict finite state machines at the service layer to mathematically reject illegal state transitions and broadcast verified domain events in real time via WebSockets.",
-      appliedIn: "Noush",
+        "Choosing designs on evidence: reproducible race, multi-instance, latency, throughput, and memory benchmarks that show what each option actually costs before committing to one.",
+      appliedIn: "redis-ratelimit-lab",
     },
     {
       id: "schema-as-code",

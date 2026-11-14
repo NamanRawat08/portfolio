@@ -1,8 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
-import MiniStateMachine from './diagrams/MiniStateMachine';
+import MiniRateLimiter from './diagrams/MiniRateLimiter';
 import MiniThreeTier from './diagrams/MiniThreeTier';
-import MiniDocStore from './diagrams/MiniDocStore';
+import MiniStaticSite from './diagrams/MiniStaticSite';
 import { hasLink } from '../utils/links';
 
 export default function ProjectCard({ project, onSelect }) {
@@ -50,9 +50,9 @@ export default function ProjectCard({ project, onSelect }) {
 
         {/* Mini Architecture Visual (exact 100px height across all cards) */}
         <div className="mb-4">
-          {project.visualType === 'state-machine' && <MiniStateMachine />}
+          {project.visualType === 'rate-limiter' && <MiniRateLimiter />}
           {project.visualType === 'three-tier' && <MiniThreeTier />}
-          {!project.visualType && <MiniDocStore />}
+          {project.visualType === 'static-site' && <MiniStaticSite />}
         </div>
 
         {/* Tech Stack Chips (aligned vertically across all cards) */}

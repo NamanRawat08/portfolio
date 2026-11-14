@@ -1,4 +1,4 @@
-import { ShieldCheck, GitMerge, Database } from 'lucide-react';
+import { ShieldCheck, Gauge, Database } from 'lucide-react';
 import { personalData } from '../data/content';
 import FadeIn from './common/FadeIn';
 
@@ -7,7 +7,7 @@ export default function Principles() {
 
   const iconMap = {
     concurrency: ShieldCheck,
-    'state-machines': GitMerge,
+    measure: Gauge,
     'schema-as-code': Database,
   };
 

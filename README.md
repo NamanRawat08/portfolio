@@ -1,6 +1,6 @@
 # Naman Rawat - Systems-Minded Backend Software Engineer Portfolio
 
-A production-quality personal portfolio website built with React 18, Vite, Tailwind CSS, and Framer Motion. Engineered specifically for SWE / SDE candidate positioning: correctness under concurrency, real-time event streaming, and reproducible schema migrations.
+A production-quality personal portfolio website built with React 18, Vite, Tailwind CSS, and Framer Motion. Engineered specifically for SWE / SDE candidate positioning: correctness under concurrency, distributed rate limiting, and reproducible schema migrations.
 
 ![Portfolio Banner](/public/favicon.svg)
 
@@ -58,8 +58,11 @@ portfolio-website/
 │   │   ├── common/
 │   │   │   └── FadeIn.jsx       # Framer Motion scroll-reveal & reduced-motion wrapper
 │   │   ├── diagrams/
-│   │   │   ├── OrderStateMachineDiagram.jsx   # Noush state machine & WebSocket diagram
-│   │   │   └── ThreeTierArchitectureDiagram.jsx # Nexfolio Client-API-DB architecture
+│   │   │   ├── MiniRateLimiter.jsx            # Card visual: redis-ratelimit-lab
+│   │   │   ├── MiniThreeTier.jsx              # Card visual: Nexfolio
+│   │   │   ├── MiniStaticSite.jsx             # Card visual: this portfolio
+│   │   │   ├── RateLimiterDiagram.jsx         # Modal: Redis/Lua request path & algorithm trade-offs
+│   │   │   └── ThreeTierArchitectureDiagram.jsx # Modal: Nexfolio Client-API-DB architecture
 │   │   ├── Navbar.jsx           # Responsive sticky header with dark/light mode toggle
 │   │   ├── Hero.jsx             # Tagline, CTAs, and verified social links
 │   │   ├── About.jsx            # Engineering summary and quick-facts stat strip
@@ -146,9 +149,6 @@ Links still set to `"TODO"` are hidden on the live site until you fill them in. 
 
 - [ ] **LeetCode Profile**: Add profile URL to `identity.leetcode`
 - [x] **Resume PDF**: `/public/Naman_Rawat_Resume.pdf`
-- [ ] **Noush GitHub**: Add repository URL to `projects[0].links.github`
-- [ ] **Noush Live Demo**: Add live demo URL to `projects[0].links.live`
-- [ ] **Nexfolio GitHub**: Add repository URL to `projects[1].links.github`
+- [x] **GitHub links**: redis-ratelimit-lab, Nexfolio, and portfolio
 - [ ] **Nexfolio Live Demo**: Add live demo URL to `projects[1].links.live`
-- [ ] **Resume Builder GitHub**: Add repository URL to `projects[2].links.github`
 - [ ] **Contact Form Webhook**: Provide your Formspree Form ID in `.env` (optional)
