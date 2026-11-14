@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sun, Moon, Menu, X, FileText } from 'lucide-react';
 import { personalData } from '../data/content';
 
@@ -8,17 +8,35 @@ export default function Navbar({ theme, toggleTheme }) {
 
   const closeMenu = () => setMobileMenuOpen(false);
 
+  // Close the mobile drawer on Escape, or when the viewport grows past the md breakpoint
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    const mq = window.matchMedia('(min-width: 768px)');
+    const onChange = (e) => {
+      if (e.matches) setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    mq.addEventListener('change', onChange);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      mq.removeEventListener('change', onChange);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-surface-border bg-bg-primary/90 backdrop-blur-md transition-colors">
       <div className="mx-auto flex h-16 max-w-content items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <a
-          href="#"
+          href="#hero"
           className="flex items-center gap-2 font-mono text-base font-semibold tracking-tight text-text-primary hover:text-accent transition-colors"
-          aria-label="Home"
+          aria-label={`${identity.name}, back to top`}
         >
           <span className="text-accent">&gt;</span>
-          <span>{identity.name.replace(' ', '_').toLowerCase()}</span>
+          <span>{identity.name.replace(/\s+/g, '_').toLowerCase()}</span>
           <span className="text-accent animate-pulse">_</span>
         </a>
 
@@ -77,8 +95,10 @@ export default function Navbar({ theme, toggleTheme }) {
 
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen((open) => !open)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border bg-surface-card text-text-primary hover:text-accent transition-colors"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -88,7 +108,7 @@ export default function Navbar({ theme, toggleTheme }) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-surface-border bg-bg-secondary px-4 py-4 space-y-3">
+        <div id="mobile-menu" className="md:hidden border-b border-surface-border bg-bg-secondary px-4 py-4 space-y-3">
           <nav className="flex flex-col space-y-2" aria-label="Mobile Navigation">
             {navLinks.map((link) => (
               <a

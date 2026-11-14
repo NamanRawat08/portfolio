@@ -1,6 +1,7 @@
 import { ArrowDown, FileText, Github, Linkedin, Mail, Code2 } from 'lucide-react';
 import { personalData } from '../data/content';
 import FadeIn from './common/FadeIn';
+import { hasLink } from '../utils/links';
 
 export default function Hero() {
   const { identity } = personalData;
@@ -59,7 +60,7 @@ export default function Hero() {
             </div>
 
             {/* Social Links */}
-            <div className="flex items-center gap-4 pt-2 text-text-secondary" aria-label="Social and Contact Profiles">
+            <nav className="flex items-center gap-4 pt-2 text-text-secondary" aria-label="Social and contact profiles">
               <a
                 href={identity.github}
                 target="_blank"
@@ -80,7 +81,7 @@ export default function Hero() {
                 <Linkedin className="h-5 w-5" />
               </a>
 
-              {identity.leetcode && identity.leetcode !== 'TODO' ? (
+              {hasLink(identity.leetcode) && (
                 <a
                   href={identity.leetcode}
                   target="_blank"
@@ -90,14 +91,6 @@ export default function Hero() {
                 >
                   <Code2 className="h-5 w-5" />
                 </a>
-              ) : (
-                <span
-                  className="rounded-lg p-2 text-text-muted cursor-not-allowed opacity-60"
-                  title="LeetCode profile link coming soon (TODO)"
-                  aria-label="LeetCode Profile (TODO)"
-                >
-                  <Code2 className="h-5 w-5" />
-                </span>
               )}
 
               <a
@@ -107,7 +100,7 @@ export default function Hero() {
               >
                 <Mail className="h-5 w-5" />
               </a>
-            </div>
+            </nav>
           </div>
 
           {/* Profile Picture Column */}

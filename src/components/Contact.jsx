@@ -14,7 +14,7 @@ export default function Contact() {
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
-  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'mailto' | 'error'
   const [errorMessage, setErrorMessage] = useState('');
 
   const validateField = (field, value) => {
@@ -81,8 +81,9 @@ export default function Contact() {
     // Graceful fallback if endpoint is not set or contains default placeholder
     if (!endpoint || endpoint.includes('your_formspree_id_here') || endpoint.includes('your_form_id')) {
       // Trigger native mailto client dispatch
+      // We can't know whether a mail client actually opened, so don't claim the message was sent.
       window.location.href = createMailtoLink();
-      setStatus('success');
+      setStatus('mailto');
       return;
     }
 
@@ -209,15 +210,27 @@ export default function Contact() {
           {/* Interactive Form */}
           <div className="lg:col-span-7">
             <div className="rounded-xl border border-surface-border bg-surface-card p-6 sm:p-7">
-              {status === 'success' ? (
+              {status === 'success' || status === 'mailto' ? (
                 <div className="space-y-4 py-6 text-center">
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent-muted text-accent">
                     <CheckCircle2 className="h-7 w-7" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-text-primary">Message Dispatched!</h3>
+                    <h3 className="text-lg font-bold text-text-primary">
+                      {status === 'mailto' ? 'Draft Opened in Your Email App' : 'Message Sent!'}
+                    </h3>
                     <p className="text-xs text-text-secondary max-w-md mx-auto">
-                      Thank you for reaching out. I review all inquiries carefully and will respond shortly.
+                      {status === 'mailto' ? (
+                        <>
+                          Hit send in your email app to deliver it. If nothing opened, email me directly at{' '}
+                          <a href={`mailto:${identity.email}`} className="text-accent underline underline-offset-2">
+                            {identity.email}
+                          </a>
+                          .
+                        </>
+                      ) : (
+                        'Thank you for reaching out. I review all inquiries carefully and will respond shortly.'
+                      )}
                     </p>
                   </div>
                   <div className="pt-2">
@@ -237,7 +250,7 @@ export default function Contact() {
                       role="alert"
                       className="rounded-lg border border-red-500/30 bg-red-500/10 p-3.5 space-y-2 text-xs"
                     >
-                      <div className="flex items-center gap-2 text-red-400 font-semibold font-mono">
+                      <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-semibold font-mono">
                         <AlertCircle className="h-4 w-4 shrink-0" />
                         <span>Submission Notice</span>
                       </div>
@@ -282,7 +295,7 @@ export default function Contact() {
                       }`}
                     />
                     {touched.name && errors.name && (
-                      <p id="contact-name-error" className="text-[11px] font-mono text-red-400 pt-0.5">
+                      <p id="contact-name-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 pt-0.5">
                         {errors.name}
                       </p>
                     )}
@@ -314,7 +327,7 @@ export default function Contact() {
                       }`}
                     />
                     {touched.email && errors.email && (
-                      <p id="contact-email-error" className="text-[11px] font-mono text-red-400 pt-0.5">
+                      <p id="contact-email-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 pt-0.5">
                         {errors.email}
                       </p>
                     )}
@@ -346,7 +359,7 @@ export default function Contact() {
                       }`}
                     />
                     {touched.message && errors.message && (
-                      <p id="contact-message-error" className="text-[11px] font-mono text-red-400 pt-0.5">
+                      <p id="contact-message-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 pt-0.5">
                         {errors.message}
                       </p>
                     )}

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { X, Github, ExternalLink, CheckCircle } from 'lucide-react';
 import OrderStateMachineDiagram from './diagrams/OrderStateMachineDiagram';
 import ThreeTierArchitectureDiagram from './diagrams/ThreeTierArchitectureDiagram';
+import { hasLink } from '../utils/links';
 
 export default function ProjectModal({ project, onClose }) {
   const modalRef = useRef(null);
@@ -30,7 +31,7 @@ export default function ProjectModal({ project, onClose }) {
 
       if (e.key === 'Tab' && modalRef.current) {
         const focusableElements = modalRef.current.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
         );
         if (focusableElements.length === 0) return;
 
@@ -66,8 +67,8 @@ export default function ProjectModal({ project, onClose }) {
 
   if (!project) return null;
 
-  const hasValidGithub = project.links.github && project.links.github !== 'TODO';
-  const hasValidLive = project.links.live && project.links.live !== 'TODO';
+  const hasValidGithub = hasLink(project.links.github);
+  const hasValidLive = hasLink(project.links.live);
 
   return (
     <div
@@ -179,7 +180,7 @@ export default function ProjectModal({ project, onClose }) {
           {/* Action Links & Pending Placeholders */}
           <div className="pt-4 border-t border-surface-border flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-3">
-              {hasValidGithub ? (
+              {hasValidGithub && (
                 <a
                   href={project.links.github}
                   target="_blank"
@@ -189,36 +190,18 @@ export default function ProjectModal({ project, onClose }) {
                   <Github className="h-4 w-4" />
                   <span>View GitHub Repository</span>
                 </a>
-              ) : (
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-surface-border bg-bg-secondary px-3 py-1.5 font-mono text-xs text-text-muted"
-                  title="Repository link placeholder (TODO)"
-                >
-                  <Github className="h-4 w-4 opacity-50" />
-                  <span>GitHub Repository: [TODO Link]</span>
-                </span>
               )}
 
-              {project.links.live && (
-                hasValidLive ? (
-                  <a
-                    href={project.links.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent-muted px-4 py-2 font-mono text-xs font-semibold text-accent hover:bg-accent hover:text-bg-primary transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    <span>Launch Live Demo</span>
-                  </a>
-                ) : (
-                  <span
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-surface-border bg-bg-secondary px-3 py-1.5 font-mono text-xs text-text-muted"
-                    title="Live demo link placeholder (TODO)"
-                  >
-                    <ExternalLink className="h-4 w-4 opacity-50" />
-                    <span>Live Demo: [TODO Link]</span>
-                  </span>
-                )
+              {hasValidLive && (
+                <a
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent-muted px-4 py-2 font-mono text-xs font-semibold text-accent hover:bg-accent hover:text-bg-primary transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  <span>Launch Live Demo</span>
+                </a>
               )}
             </div>
 

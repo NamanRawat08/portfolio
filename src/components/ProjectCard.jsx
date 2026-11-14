@@ -3,11 +3,12 @@ import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import MiniStateMachine from './diagrams/MiniStateMachine';
 import MiniThreeTier from './diagrams/MiniThreeTier';
 import MiniDocStore from './diagrams/MiniDocStore';
+import { hasLink } from '../utils/links';
 
 export default function ProjectCard({ project, onSelect }) {
   const shouldReduceMotion = useReducedMotion();
-  const hasValidGithub = project.links.github && project.links.github !== 'TODO';
-  const hasValidLive = project.links.live && project.links.live !== 'TODO';
+  const hasValidGithub = hasLink(project.links.github);
+  const hasValidLive = hasLink(project.links.live);
 
   const CardWrapper = shouldReduceMotion ? 'article' : motion.article;
   const motionProps = shouldReduceMotion
@@ -25,7 +26,7 @@ export default function ProjectCard({ project, onSelect }) {
       <div className="flex flex-col flex-1">
         {/* Header: Title & Badges (consistent height) */}
         <div className="mb-3">
-          <div className="h-6 flex items-center mb-2">
+          <div className="h-6 flex items-center gap-2 mb-2">
             {project.featured && (
               <span className="rounded-full border border-accent/40 bg-accent-muted px-2 py-0.5 font-mono text-[11px] font-semibold text-accent">
                 Flagship Project
@@ -79,7 +80,7 @@ export default function ProjectCard({ project, onSelect }) {
         </button>
 
         <div className="flex items-center gap-3">
-          {hasValidGithub ? (
+          {hasValidGithub && (
             <a
               href={project.links.github}
               target="_blank"
@@ -89,34 +90,18 @@ export default function ProjectCard({ project, onSelect }) {
             >
               <Github className="h-4 w-4" />
             </a>
-          ) : (
-            <span
-              className="text-text-muted cursor-not-allowed opacity-50 font-mono text-[11px]"
-              title="Repository link pending (TODO)"
-            >
-              Repo [TODO]
-            </span>
           )}
 
-          {project.links.live && (
-            hasValidLive ? (
-              <a
-                href={project.links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-secondary hover:text-accent transition-colors"
-                aria-label={`${project.title} Live demo`}
-              >
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            ) : (
-              <span
-                className="text-text-muted cursor-not-allowed opacity-50 font-mono text-[11px]"
-                title="Live demo link pending (TODO)"
-              >
-                Demo [TODO]
-              </span>
-            )
+          {hasValidLive && (
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-secondary hover:text-accent transition-colors"
+              aria-label={`${project.title} live demo`}
+            >
+              <ExternalLink className="h-4 w-4" />
+            </a>
           )}
         </div>
       </div>

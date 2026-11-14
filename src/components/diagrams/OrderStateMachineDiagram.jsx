@@ -57,7 +57,7 @@ export default function OrderStateMachineDiagram() {
         </div>
 
         <div className="flex items-start gap-2.5 rounded-lg border border-red-500/30 bg-red-500/5 p-2.5 text-text-secondary">
-          <ShieldAlert className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+          <ShieldAlert className="h-4 w-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
           <span className="text-[11px] leading-relaxed">
             Invariant: Out-of-sequence or backward transitions are rejected with HTTP 400 (Invalid Transition).
           </span>

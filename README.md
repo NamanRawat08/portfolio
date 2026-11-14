@@ -51,9 +51,9 @@ portfolio-website/
 ├── index.html                   # HTML5 entry with SEO, Open Graph & JSON-LD Person schema
 ├── public/
 │   ├── favicon.svg              # Brand SVG favicon
-│   └── Naman_Rawat_Resume.pdf   # Resume PDF placeholder
+│   ├── naman-rawat.jpg          # Headshot (Hero + Open Graph image)
+│   └── Naman_Rawat_Resume.pdf   # Resume PDF
 ├── src/
-│   ├── assets/                  # Static media assets
 │   ├── components/
 │   │   ├── common/
 │   │   │   └── FadeIn.jsx       # Framer Motion scroll-reveal & reduced-motion wrapper
@@ -72,6 +72,8 @@ portfolio-website/
 │   │   └── Footer.jsx           # Semantic footer
 │   ├── data/
 │   │   └── content.js           # SINGLE SOURCE OF TRUTH (all copy & project metadata)
+│   ├── utils/
+│   │   └── links.js             # hasLink(): hides links still set to "TODO"
 │   ├── hooks/
 │   │   └── useTheme.js          # Dark/light theme persistence in localStorage
 │   ├── App.jsx                  # Main application container
@@ -140,10 +142,10 @@ The contact form is configured to work out-of-the-box:
 
 ## 📋 Outstanding Candidate TODO Checklist
 
-Before sharing with recruiters, update the following placeholders in `src/data/content.js`:
+Links still set to `"TODO"` are hidden on the live site until you fill them in. Update these in `src/data/content.js`:
 
 - [ ] **LeetCode Profile**: Add profile URL to `identity.leetcode`
-- [ ] **Resume PDF**: Replace placeholder at `/public/Naman_Rawat_Resume.pdf` with your updated resume
+- [x] **Resume PDF**: `/public/Naman_Rawat_Resume.pdf`
 - [ ] **Noush GitHub**: Add repository URL to `projects[0].links.github`
 - [ ] **Noush Live Demo**: Add live demo URL to `projects[0].links.live`
 - [ ] **Nexfolio GitHub**: Add repository URL to `projects[1].links.github`

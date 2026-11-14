@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTheme } from './hooks/useTheme';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -17,6 +17,8 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [selectedProject, setSelectedProject] = useState(null);
   const { projects, sections } = personalData;
+  // Stable reference so the modal's keydown/focus effect doesn't re-run (and steal focus) on unrelated re-renders.
+  const closeProject = useCallback(() => setSelectedProject(null), []);
 
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary selection:bg-accent/20 selection:text-accent font-sans transition-colors duration-200 overflow-x-hidden">
@@ -56,7 +58,7 @@ export default function App() {
                 <ProjectCard
                   key={project.id}
                   project={project}
-                  onSelect={(p) => setSelectedProject(p)}
+                  onSelect={setSelectedProject}
                 />
               ))}
             </div>
@@ -80,7 +82,7 @@ export default function App() {
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
-          onClose={() => setSelectedProject(null)}
+          onClose={closeProject}
         />
       )}
     </div>
